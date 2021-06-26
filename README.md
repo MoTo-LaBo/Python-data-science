@@ -7,4 +7,24 @@
 - coding の考え方
 - 今回の code はなるべく PEP8 に準拠
 > https://www.python.org/dev/peps/pep-0008/
-
+##  環境構築
+#### 1. docker に login
+    docker login
+- Login Succeeded  (login 成功)
+#### 2. docker hub から docker image 取得
+    docker pull datascientistus/ds-python-env
+- docker pull < image 名>
+#### 3. docker image 一覧表示
+    docker images
+#### 4. container を立てる
+    docker run -v ~/Dropbox/udemy/Python_data_science:/work -p 8888:8888 --name my-env datascientistus/ds-python-env
+- -v option を付けると、container の file system を Host に mount する事ができる
+- -p option : port (ポート) Jupyterlab は web のアプリケーション。ネットワークを介してアクセスするものなので、指定した port の上で動かす必要がある
+- 今回は 8888:8888 という port の上で動くようにしてある default の Jupyter の port の番号
+- container の port を Host に繋げてあげないと動かない。なので host 側の localhost.8888 に接続すると container 8888 に届くようになっている
+-   -- name で container に名前を付ける事ができる
+    -   名前を付けないと container の方で default で変な名前が付けられてしまう
+#### 5.  Lab App 一覧が表示されて Jupyter lab 起動 -> browser に移動
+-  ブラウザで **localhost:8888** アクセス
+   -  Firefox, chrome が良い
+-  Jupyter lab が表示される
