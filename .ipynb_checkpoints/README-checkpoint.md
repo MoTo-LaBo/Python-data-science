@@ -47,7 +47,4 @@
     docker rm < container >
 #### コンテナを restart
     docker restart < container >
-## Jupyterlab
-    pip install --upgrade jupyterlab
-- まずは upgrade しておく
-- version up する事でおかしな挙動の改善ができる
+
