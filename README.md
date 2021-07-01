@@ -51,3 +51,12 @@
     pip install --upgrade jupyterlab
 - まずは upgrade しておく
 - version up する事でおかしな挙動の改善ができる
+## NumPy
+- Numerical Python の略
+- 科学や数学の為の数値計算ライブラリ
+- 行列計算が得意
+- data sience に python が主流になったかは、NumPy があったからと言うくらい data sience では要になる
+- **ベクトル**
+  - **大きさだけではなく向きをもつ(速度や力など)**
+- **行列**
+  -  **ベクトルを複数行(もしくは列)にまとめたもの**
