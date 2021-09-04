@@ -32,3 +32,5 @@ jupyterlab_git/labextension
 
 # OSX files
 .DS_Store
+
+# project
