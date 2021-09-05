@@ -17,10 +17,10 @@
 ### 3. docker image 一覧表示
     docker images
 ### 4. container を立てる
-    docker run -v ~/Dropbox/udemy/Python_data_science:/work -p 8888:8888 --name my-env datascientistus/ds-python-env
+    docker run -v ~/Dropbox/udemy/Python_data_science:/work -p 3333:8888 --name kame-env datascientistus/ds-python-env
 - -v option を付けると、container の file system を Host に mount する事ができる
 - -p option : port (ポート) Jupyterlab は web のアプリケーション。ネットワークを介してアクセスするものなので、指定した port の上で動かす必要がある
-- 今回は 8888:8888 という port の上で動くようにしてある default の Jupyter の port の番号
+- 今回は *3333*:8888 という port の上で動くようにしてある default の Jupyter の port の番号
 - container の port を Host に繋げてあげないと動かない。なので host 側の localhost.8888 に接続すると container 8888 に届くようになっている
 -   -- name で container に名前を付ける事ができる
     -   名前を付けないと container の方で default で変な名前が付けられてしまう
@@ -51,12 +51,6 @@
     pip install --upgrade jupyterlab
 - まずは upgrade しておく
 - version up する事でおかしな挙動の改善ができる
-## NumPy
-- Numerical Python の略
-- 科学や数学の為の数値計算ライブラリ
-- 行列計算が得意
-- data sience に python が主流になったかは、NumPy があったからと言うくらい data sience では要になる
-- **ベクトル**
-  - **大きさだけではなく向きをもつ(速度や力など)**
-- **行列**
-  -  **ベクトルを複数行(もしくは列)にまとめたもの**
+## Docker container とは？
+### <u>container は localhost とは独立した環境</u>
+- *hostがどういう環境であろうとcontainerを作れば同じ環境になる*
