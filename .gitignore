@@ -34,3 +34,4 @@ jupyterlab_git/labextension
 .DS_Store
 
 # project
+rp*
