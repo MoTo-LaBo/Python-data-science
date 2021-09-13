@@ -58,3 +58,15 @@ def hu_to_gray(volume):
     
     # astype(np.uint8) にすることで　0 ~ 255 の　int　で返してくれる
     return volume_rerange.astype(np.uint8)
+
+
+
+# ------------------ Overlay 重ね合わせ関数 -------------------
+
+def overlay(gray_volume, mask_volume, mask_color, alpha):
+    mask_filter = np.greater(mask_volume, 0)
+    mask_filter = np.stack([mask_filter, mask_filter, mask_filter], axis=-1)
+    overlayed = np.where(mask_filter,
+                       ((1-alpha)*gray_volume + alpha*mask_color).astype(np.uint8), gray_volume)
+    
+    return overlayed
