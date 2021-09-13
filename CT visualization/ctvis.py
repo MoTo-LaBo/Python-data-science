@@ -44,3 +44,17 @@ def label_color(mask_volume,
     mask_color[np.equal(mask_volume, 3)] = effusion_color
     
     return mask_color
+
+
+
+# ------------------ HU to gray 変換関数 -------------------
+
+def hu_to_gray(volume):
+    maxhu = np.max(volume)
+    minhu = np.min(volume)
+    volume_rerange = (volume - minhu) / max((maxhu-minhu), 1e-3)
+    volume_rerange = volume_rerange * 255
+    volume_rerange = np.stack([volume_rerange, volume_rerange, volume_rerange], axis=-1)
+    
+    # astype(np.uint8) にすることで　0 ~ 255 の　int　で返してくれる
+    return volume_rerange.astype(np.uint8)

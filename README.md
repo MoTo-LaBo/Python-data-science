@@ -35,7 +35,7 @@
   - run をした時に docker image が local host にない場合は自動で pull をして来てくれる
   - 事実上はコマンド 1行で完了できる！！
 ## Docker の基本操作
-#### コンテナ一覧表示
+### コンテナ一覧表示
     docker ps -a
 ### docker image 一覧表示
     docker images
