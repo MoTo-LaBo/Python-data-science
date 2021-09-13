@@ -31,21 +31,21 @@
 -  Docker を使用する事で簡単に data sience の環境構築ができる
    -  docker login -> docker pull < image 名 > -> docker run
    -  ３つのコマンドで完了
-#### 実は docker の pull は必要がない
+### 実は docker の pull は必要がない
   - run をした時に docker image が local host にない場合は自動で pull をして来てくれる
   - 事実上はコマンド 1行で完了できる！！
 ## Docker の基本操作
 #### コンテナ一覧表示
     docker ps -a
-#### docker image 一覧表示
+### docker image 一覧表示
     docker images
-#### docker image から container 起動
+### docker image から container 起動
     docker run -v ~/Desktop/work:/work -p 8888:8888 --name my-env < image名 >
-#### コンテナを止める
+### コンテナを止める
     docker stop < container >
-#### コンテナを削除
+### コンテナを削除
     docker rm < container >
-#### コンテナを restart
+### コンテナを restart
     docker restart < container >
 ## Jupyterlab
     pip install --upgrade jupyterlab
