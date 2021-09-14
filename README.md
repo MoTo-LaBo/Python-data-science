@@ -47,10 +47,6 @@
     docker rm < container >
 ### コンテナを restart
     docker restart < container >
-## Jupyterlab
-    pip install --upgrade jupyterlab
-- まずは upgrade しておく
-- version up する事でおかしな挙動の改善ができる
 ## Docker container とは？
 ### <u>container は localhost とは独立した環境</u>
 - *hostがどういう環境であろうとcontainerを作れば同じ環境になる*
