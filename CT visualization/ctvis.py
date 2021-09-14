@@ -76,7 +76,7 @@ def overlay(gray_volume, mask_volume, mask_color, alpha):
 
 # ------------------ slice annotation　表示(algorithm) -------------------
 
-def vis_overlay(overlayed, cols=5, display_num=45, figsize=(15, 15)):
+def vis_overlay(overlayed, original_volume, mask_volume, cols=5, display_num=45, figsize=(15, 15)):
     
     rows = (display_num - 1) // cols + 1  # 行 = (25枚表示　-1)//5 + 1 / -1 をする事により割きれて行が増える事を防止
     total_num = overlayed.shape[-2]       # トータルの枚数 : (630, 630, 45, 3)
@@ -93,6 +93,34 @@ def vis_overlay(overlayed, cols=5, display_num=45, figsize=(15, 15)):
         idx = int((i * interval))         # interval を計算した後に　intに変換
         if idx >= total_num:              # index は 0 から始まるので　＞＝　にする
             break                         # error ハンドリング　トータル枚数になったら　for文を抜ける
-
-    #     ax[i//cols, i%cols].imshow(overlayed[:, :, 10])　変数に置き換える
+            
+        # 下記の HU　の統計量関数を呼び出す
+        stats = get_hu_stats(original_volume[:, :, idx], mask_volume[:, :, idx])
+        title = 'slice #: {}'.format(idx)
+        title += '\nggo mean: {:.0f}±{:.0f}'.format(stats['ggo_mean'],stats['ggo_std'])
+        title += '\nconsoli mean: {:.0f}±{:.0f}'.format(stats['consolidation_mean'],stats['consolidation_std'])
+        title += '\neffusion mean: {:.0f}±{:.0f}'.format(stats['effusion_mean'],stats['effusion_std'])
+        
+        # ax[i//cols, i%cols].imshow(overlayed[:, :, 10])　変数に置き換える
         ax[row_i, col_i].imshow(overlayed[:, :, idx])
+        ax[row_i, col_i].set_title(title)            # 各種 tilte 表示
+        ax[row_i, col_i].axis('off')                 # 軸を非表示にできる
+    fig.tight_layout()
+
+
+# ---------------------------- HU の統計量を返す関数 -----------------------------
+# label　の dictionary を作成　/ key : value
+    
+def get_hu_stats(volume, mask_volume,
+                 label_dict = {1: 'ggo', 2: 'consolidation', 3: 'effusion'}):
+    # 保存しておく用の　dictionary
+    result = {}
+    # .keys() : key の値を返してくれる
+    for label in label_dict.keys():
+        # dictionary から　key　を指定して　値(value)を取得
+        prefix = label_dict[label]
+        roi_hu = volume[np.equal(mask_volume, label)]
+        result[prefix + '_mean'] = np.mean(roi_hu) 
+        result[prefix + '_std'] = np.std(roi_hu) 
+    
+    return result
