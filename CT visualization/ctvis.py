@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt
 import nibabel as nib
 from glob import glob
 
@@ -28,7 +29,7 @@ def load_nifti(path):
     return np.rollaxis(data, 1)
 
 
-# ------------------ Mask Data RGB 変換関数 -------------------
+# ------------------ Mask Data RGB 変換(algorithm) -------------------
 
 def label_color(mask_volume,
                ggo_color = [255, 0 , 0],
@@ -70,3 +71,28 @@ def overlay(gray_volume, mask_volume, mask_color, alpha):
                        ((1-alpha)*gray_volume + alpha*mask_color).astype(np.uint8), gray_volume)
     
     return overlayed
+
+
+
+# ------------------ slice annotation　表示(algorithm) -------------------
+
+def vis_overlay(overlayed, cols=5, display_num=45, figsize=(15, 15)):
+    
+    rows = (display_num - 1) // cols + 1  # 行 = (25枚表示　-1)//5 + 1 / -1 をする事により割きれて行が増える事を防止
+    total_num = overlayed.shape[-2]       # トータルの枚数 : (630, 630, 45, 3)
+    interval = total_num / display_num    # 等間隔にする : 100 / 10 = 10　飛ばし飛ばし
+    if interval < 1:                      # もしトータルより表示枚数が多くても、１が入るので必ず次の枚数を取得できる
+        interval = 1
+
+    fig, ax = plt.subplots(rows, cols, figsize=figsize)
+    for i in range(display_num):          # トータルの枚数
+
+        # 変数にしてしまう
+        row_i = i//cols                   # 商
+        col_i = i%cols                    # 余り  
+        idx = int((i * interval))         # interval を計算した後に　intに変換
+        if idx >= total_num:              # index は 0 から始まるので　＞＝　にする
+            break                         # error ハンドリング　トータル枚数になったら　for文を抜ける
+
+    #     ax[i//cols, i%cols].imshow(overlayed[:, :, 10])　変数に置き換える
+        ax[row_i, col_i].imshow(overlayed[:, :, idx])
